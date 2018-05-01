@@ -1,13 +1,21 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<form class="example-form">
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Enter YouTube URL" #url> 
-  </mat-form-field>
-</form>
-<button mat-raised-button (click) = "extractId(url.value)">Generate links!</button>
+<app-header></app-header>
 
-<div *ngFor="let link of streamResults; let i = index;">
-  <a href="{{link.url}}" download>
-    Link - {{i+1}}  (Quality: {{link.quality}}, Video Format: {{returnType(link.type)}})
-  </a>
+<div class="container">
+  <div class="example-form">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Enter YouTube URL" [(ngModel)]="urlValue" name="name" #url="ngModel" (keyup.enter)="extractId(url.value)"> 
+    </mat-form-field>
+  </div>
+
+  <button mat-raised-button class="generate-btn" disabled="{{url.pristine}}" (click) = "extractId(url.value)">Generate links!</button>
+
+  <mat-spinner *ngIf="isSpinnerOn"></mat-spinner>
+
+  <div class="download-lists" *ngFor="let link of streamResults; let i = index;">
+    <a href="{{link.url}}" download target="_blank">
+      <button mat-raised-button color="primary"> <mat-icon>file_download</mat-icon> Link-{{i+1}}</button>  
+      <mat-chip>(Quality: {{link.quality}}, Video Format: {{returnType(link.type)}})</mat-chip>
+    </a>
+  </div>
 </div>

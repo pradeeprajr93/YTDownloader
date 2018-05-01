@@ -7,3 +7,33 @@
 .example-full-width {
   width: 100%;
 }
+
+.container{
+    padding: 10px;
+}
+
+.generate-btn{
+    color: white;
+    background: #373737;
+}
+
+mat-spinner{
+    margin: 20px;
+}
+
+.download-lists{
+
+}
+
+.download-lists a{
+    text-decoration: none;
+}
+
+.download-lists a button {
+    margin: 10px;
+}
+
+.download-lists a mat-chip {
+    padding: 6px;
+    border-radius: 15px;
+}

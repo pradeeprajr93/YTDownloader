@@ -1,0 +1,19 @@
+*{
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+header{
+    height: 60px;
+    background: #2d2d2d;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+img{
+    padding-left: 5px;
+}
+
+h2{
+    margin: 0;
+    padding-left: 10px;
+}

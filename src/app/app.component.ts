@@ -1,6 +1,6 @@
 import { GetVideoInfoService } from './services/get-video-info.service';
 import { Component } from '@angular/core';
-// import * as Util from './../assets/scripts/utils.js';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +12,24 @@ export class AppComponent {
   videoId: string;
   videoInfo: any;
   streamResults: any;
+  isSpinnerOn: boolean;
+  urlValue: string;
 
-  constructor(private getVideoInfoService: GetVideoInfoService){
+  constructor(private getVideoInfoService: GetVideoInfoService, public snackBar: MatSnackBar){
 
   }
 
+  showWarning(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 4000,
+    });
+    this.urlValue = '';
+    this.isSpinnerOn = false;
+  }
+
   extractId(urlValue){
+    this.streamResults = null;
+    this.isSpinnerOn = true;
     let regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;  
     let match = urlValue.match(regExp);  
     if(match){  
@@ -26,7 +38,9 @@ export class AppComponent {
       this.getVideoInfoService.getTextFile(`https://cors-anywhere.herokuapp.com/https://www.youtube.com/get_video_info?video_id=${this.videoId}`)
         .subscribe(results => {
           this.videoInfo = results;
-          // console.log(this.videoInfo);
+          if((<string>this.videoInfo).indexOf('status=fail') !== -1){
+            this.showWarning('Sorry, Restricted video! This cannot be downloaded :(');
+          }
           let info = {};
           info = parse_str(this.videoInfo, info);  
           let streams = explode(',', info['url_encoded_fmt_stream_map']);  
@@ -39,10 +53,19 @@ export class AppComponent {
           }
         console.log(streamResults);
         this.streamResults = streamResults;
-          });
+          },
+    error => {
+      console.log('Some error occured!');
+    },
+    () => {
+      console.log('Finally!');
+      this.isSpinnerOn = false;
+    } 
+  );
     }  
     else{
-      console.log('Invalid URL! Please chekc again.');
+      console.error('Invalid URL! Please check again.');
+      this.showWarning('Hey, Please enter a valid YouTube URL!');
     }
   }
   

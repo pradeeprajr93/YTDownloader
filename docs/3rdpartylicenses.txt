@@ -122,6 +122,10 @@ MIT
 MIT
 MIT
 
+@angular/forms@5.2.10
+MIT
+MIT
+
 @angular/common@5.2.10
 MIT
 MIT
@@ -175,10 +179,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 @angular/animations@5.2.10
-MIT
-MIT
-
-@angular/forms@5.2.10
 MIT
 MIT
 
