@@ -1,58 +1,4 @@
-import { GetVideoInfoService } from './services/get-video-info.service';
-import { Component } from '@angular/core';
-// import * as Util from './../assets/scripts/utils.js';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
-})
-export class AppComponent {
-
-  videoId: string;
-  videoInfo: any;
-  streamResults: any;
-
-  constructor(private getVideoInfoService: GetVideoInfoService){
-
-  }
-
-  extractId(urlValue){
-    let regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;  
-    let match = urlValue.match(regExp);  
-    if(match){  
-      this.videoId = match[1];  
-      console.log(this.videoId);
-      this.getVideoInfoService.getTextFile(`http://cors-proxy.htmldriven.com/?url=https://www.youtube.com/get_video_info?video_id=${this.videoId}`)
-        .subscribe(results => {
-          this.videoInfo = results;
-          // console.log(this.videoInfo);
-          let info = {};
-          info = parse_str(this.videoInfo, info);  
-          let streams = explode(',', info['url_encoded_fmt_stream_map']);  
-          let streamResults = [];  
-          for(let i=0; i<streams.length; i++){  
-          var real_stream = {};  
-          real_stream = parse_str(streams[i], real_stream);            
-          real_stream['url'] += '&signature=' + real_stream['signature'];  
-          streamResults.push(real_stream);  
-          }
-        console.log(streamResults);
-        this.streamResults = streamResults;
-          });
-    }  
-    else{
-      console.log('Invalid URL! Please chekc again.');
-    }
-  }
-  
-  returnType(typeString: string){
-    let firstIndex = typeString.indexOf('/');
-    let secondIndex = typeString.substr(firstIndex+1).indexOf(';');
-    return typeString.substr(firstIndex+1).substr(0,secondIndex);
-  }
-
-  parse_str (str, array) {
+function parse_str (str, array) {
   // http://kevin.vanzonneveld.net
   // +   original by: Cagri Ekin
   // +   improved by: Michael White (http://getsprink.com)
@@ -90,7 +36,7 @@ export class AppComponent {
     };
 
   if (!array) {
-    array = window;
+    array = this.window;
   }
 
   for (i = 0; i < sal; i++) {
@@ -166,7 +112,7 @@ export class AppComponent {
   return array;
 }
 
-explode (delimiter, string, limit) {
+function explode (delimiter, string, limit) {
 
   if ( arguments.length < 2 || typeof delimiter == 'undefined' || typeof string == 'undefined' ) return null;
   if ( delimiter === '' || delimiter === false || delimiter === null) return false;
@@ -198,7 +144,4 @@ explode (delimiter, string, limit) {
   
   s.splice( s.length + limit );
   return s;
-}
-
-
 }
