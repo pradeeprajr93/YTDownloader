@@ -23,7 +23,7 @@ export class AppComponent {
     if(match){  
       this.videoId = match[1];  
       console.log(this.videoId);
-      this.getVideoInfoService.getTextFile(`http://cors-proxy.htmldriven.com/?url=https://www.youtube.com/get_video_info?video_id=${this.videoId}`)
+      this.getVideoInfoService.getTextFile(`https://cors-anywhere.herokuapp.com/https://www.youtube.com/get_video_info?video_id=${this.videoId}`)
         .subscribe(results => {
           this.videoInfo = results;
           // console.log(this.videoInfo);
