@@ -1,6 +1,6 @@
 {
-  "name": "youtube-downloader",
-  "short_name": "youtube-downloader",
+  "name": "Simple YouTube Downloader",
+  "short_name": "YT Downloader",
   "theme_color": "#2d2d2d",
   "background_color": "#2d2d2d",
   "display": "standalone",
