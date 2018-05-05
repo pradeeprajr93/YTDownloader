@@ -34,7 +34,7 @@ import { environment } from '../environments/environment';
     MatProgressSpinnerModule,
     MatIconModule,
     MatChipsModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('/YTDownloader/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [GetVideoInfoService],
   bootstrap: [AppComponent]
